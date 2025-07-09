@@ -1,0 +1,6 @@
+uiux-123-3591d4637a9b.json
+__pycache__/
+*.pyc
+*.pyo
+*.pyd    
+.env           

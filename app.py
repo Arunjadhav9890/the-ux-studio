@@ -3,10 +3,16 @@ import traceback
 from flask import Flask, request, jsonify
 from datetime import datetime
 from firebase_setup import db 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import re
 
 app = Flask(__name__)
 
+limiter = Limiter(
+    get_remote_address,
+    app=app
+)
 
 @app.route('/')
 def home():
@@ -24,6 +30,7 @@ def health_check():
         return jsonify({"status": "unhealthy", "error": str(e)}), 500   
 # CREATE
 @app.route('/sendmessage', methods=['POST'])
+@limiter.limit("2 per day") 
 def send_message():
     data = request.get_json()
     name = data.get("name")

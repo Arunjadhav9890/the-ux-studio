@@ -3,4 +3,4 @@ firebase-admin
 gunicorn==21.2.0
 google-cloud-firestore
 dotenv
-
+Flask-Limiter

@@ -6,8 +6,10 @@ from firebase_setup import db
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import re
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["https://theuxstudio.tech"])  # Whitelist your frontend domain
 
 limiter = Limiter(
     get_remote_address,
@@ -23,7 +25,7 @@ def home():
 def health_check():
     try:
         # Attempt to fetch a document to check Firestore connection
-        db.collection("students").limit(1).get()
+        db.collection("contacts").limit(1).get()
         return jsonify({"status": "healthy"}), 200
     except Exception as e:
         traceback.print_exc()
@@ -50,7 +52,7 @@ def send_message():
     created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
-        doc_ref = db.collection("students")
+        doc_ref = db.collection("contacts")
         new_doc_ref = doc_ref.add({
             "name": name,
             "email": email,
@@ -78,7 +80,7 @@ def update_message(doc_id):
         return jsonify({"error": "Missing name or email"}), 400
 
     try:
-        doc_ref = db.collection("students").document(doc_id)
+        doc_ref = db.collection("contacts").document(doc_id)
         if not doc_ref.get().exists:
             return jsonify({"error": "Document not found"}), 404
 
@@ -100,7 +102,7 @@ def update_message(doc_id):
 # @require_api_key
 def delete_message(doc_id):
     try:
-        doc_ref = db.collection("students").document(doc_id)
+        doc_ref = db.collection("contacts").document(doc_id)
         if not doc_ref.get().exists:
             return jsonify({"error": "Document not found"}), 404
 
@@ -117,7 +119,7 @@ def delete_message(doc_id):
 # @require_api_key
 def get_message(doc_id):
     try:
-        doc_ref = db.collection("students").document(doc_id)
+        doc_ref = db.collection("contacts").document(doc_id)
         doc = doc_ref.get()
         if not doc.exists:
             return jsonify({"error": "Document not found"}), 404

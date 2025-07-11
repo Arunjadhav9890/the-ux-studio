@@ -9,7 +9,14 @@ import re
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins=["https://theuxstudio.tech"])  # Whitelist your frontend domain
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "https://theuxstudio.tech"}},
+    supports_credentials=True,           # needed if you send cookies / auth headers
+    methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "Authorization"],
+    expose_headers=["Content-Type"]      # add any custom headers you need the browser to see
+)  # Whitelist your frontend domain
 
 limiter = Limiter(
     get_remote_address,

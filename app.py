@@ -11,7 +11,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(
     app,
-    resources={r"/api/*": {"origins": "https://theuxstudio.tech"}},
+    resources={r"/*": {"origins": "https://theuxstudio.tech"}},
     supports_credentials=True,           # needed if you send cookies / auth headers
     methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Content-Type", "Authorization"],

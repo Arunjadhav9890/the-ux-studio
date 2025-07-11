@@ -8,10 +8,15 @@ from flask_limiter.util import get_remote_address
 import re
 from flask_cors import CORS
 
+
 app = Flask(__name__)
+ALLOWED_ORIGINS = [
+    "https://theuxstudio.tech",
+    "https://www.theuxstudio.tech",          # <- add any extra domain or port here
+]
 CORS(
     app,
-    resources={r"/*": {"origins": "https://theuxstudio.tech"}},
+    resources={r"/*": {"origins": ALLOWED_ORIGINS}},
     supports_credentials=True,           # needed if you send cookies / auth headers
     methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Content-Type", "Authorization"],

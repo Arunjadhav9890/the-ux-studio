@@ -43,6 +43,51 @@ def health_check():
         traceback.print_exc()
         return jsonify({"status": "unhealthy", "error": str(e)}), 500   
 # CREATE
+
+
+
+# # GET /ramdata
+# @app.route('/ramdata', methods=['GET'])
+# def ram_data():
+#     try:
+#         docs = db.collection("ram-data").limit(2).get()
+#         data = [doc.to_dict() for doc in docs]
+#         return jsonify({"status": "success", "data": data}), 200
+#     except Exception as e:
+#         traceback.print_exc()
+#         return jsonify({"status": "unhealthy", "error": str(e)}), 500
+
+# # ✅ POST /ramdata -- this must be added below the GET one
+# @app.route('/ramdata', methods=['POST'])
+# def create_ram_data():
+#     data= request.get_json()
+#     name = data.get("name")
+#     email = data.get("email")
+#     message = data.get("message")
+    
+#     if not name or not email:
+#         return jsonify({"error": "Missing name or email"}), 400
+#     if not re.match(r"^[A-Za-z\s]+$", name):
+#         return jsonify({"error": "Invalid name format"}), 400
+#     create_ram_data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+#     try:
+#         def_ref = db.collection("ram-data")
+#         new_doc_ref = def_ref.add({
+#             "name": name,
+#             "email": email,
+#             "message": message,
+#             "created_at": create_ram_data
+#         })
+#         # print(f"Document created with ID: {new_doc_ref.id}")
+#         return jsonify({"message": "Data created successfully", "created_at": create_ram_data}), 201
+#     except Exception as e:
+#         traceback.print_exc()
+#         return jsonify({"error": str(e)}), 500
+    
+ 
+
+# CREATE    
 @app.route('/sendmessage', methods=['POST'])
 @limiter.limit("2 per day") 
 def send_message():

@@ -42,8 +42,6 @@ def health_check():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"status": "unhealthy", "error": str(e)}), 500   
-# CREATE
-
 
 
 # # GET /ramdata
@@ -84,7 +82,6 @@ def health_check():
 #     except Exception as e:
 #         traceback.print_exc()
 #         return jsonify({"error": str(e)}), 500
-    
  
 
 # CREATE    
@@ -105,7 +102,7 @@ def send_message():
     # Email should match typical email format
     if not re.match(r"^[\w\.-]+@[\w\.-]+\.\w{2,}$", email):
         return jsonify({"error": "Invalid email format"}), 400
-    
+ 
     created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
@@ -122,9 +119,7 @@ def send_message():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
-    
-
-    
+   
 # Update message
 @app.route('/sendmessage/<doc_id>', methods=['PUT'])
 def update_message(doc_id):
